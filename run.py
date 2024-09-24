@@ -33,8 +33,7 @@ Would you like to focus on any specific area today, like speaking, listening, or
 # tts = TTS(model_name="voice_conversion_models/multilingual/vctk/freevc24", progress_bar=True).to(device)
 # tts.voice_conversion_to_file(source_wav="./targets/bebi-short-wav.wav", target_wav="./sources/ayaka-voice-wav.wav", file_path="./outputs/ayaka-sx-wav.wav")
 
-HEIGHT = 700
-WIDTH = 600
-
-ui = CoquiUI(WIDTH, HEIGHT)
-ui.init()
+if __name__ == "__main__":
+    window = tk.Tk()
+    app = CoquiUI(window)
+    window.mainloop()
