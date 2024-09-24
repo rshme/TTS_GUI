@@ -12,7 +12,8 @@ class CoquiUI:
         self.window = window
         self.setup_window()
         self.create_canvas()
-        self.create_base_widgets()
+        self.create_base_widgets("Voice Speaking")
+        # Init voice speaking model first
         self.create_vs_widgets()
 
     def setup_window(self):
@@ -48,7 +49,7 @@ class CoquiUI:
             font=("Poppins Regular", 14 * -1)
         )
         
-    def create_base_widgets(self):
+    def create_base_widgets(self, selectedModel):
         # TTS Model Selector
         self.canvas.create_text(
             366.0, 31.0, anchor="nw",
@@ -61,13 +62,23 @@ class CoquiUI:
             values=["Voice Speaking", "Voice Cloning"]
         )
         self.model.place(x=366.0, y=54.0)
-        self.model.set("Voice Speaking")
+        self.model.set(selectedModel)
         self.model.bind("<<ComboboxSelected>>", self.generateModelLayout)
         
         self.drawGenerateButton()
         
     def generateModelLayout(self, event):
-        """ Switch dynamic form here between create_vs_widgets and create_vc_widgets """
+        """ Switch dynamic form here between "create_vs_widgets" and "create_vc_widgets" """
+        selectedModel = self.model.get()
+        
+        # Destroy current active widget
+        self.clear_dynamic_widgets()
+        
+        # Switch between Voice Speaking and Voice Cloning based on selection
+        if selectedModel == "Voice Speaking":
+            self.create_vs_widgets()  # Load Voice Speaking widgets
+        elif selectedModel == "Voice Cloning":
+            self.create_vc_widgets()  # Load Voice Cloning widgets
 
     def create_vs_widgets(self):
         # Language Selector
@@ -81,6 +92,7 @@ class CoquiUI:
             self.window, state="readonly",
             values=["en", "ru", "ja", "zh-cn", "es", "fr", "ko"]
         )
+        self.select_lang.set("en")
         self.select_lang.place(x=366.0, y=127.0)
 
         # Text-to-Speech Area
@@ -206,14 +218,24 @@ class CoquiUI:
             height=32.0
         )
 
-    def select_source_path(self):
-        return filedialog.askopenfilename()
-
-    def select_output_path(self):
-        return filedialog.asksaveasfilename()
-
     def generate_voice(self):
         print(self.output_path.get())
+        
+    def clear_dynamic_widgets(self):
+        selectedModel = self.model.get()
+        print(selectedModel)
+        
+        """ Clear widgets related to the model-specific section (vs_widgets and vc_widgets) """
+        # Destroy all dynamically created widgets to prepare for new ones
+        for widget in self.window.place_slaves():
+            if widget not in [self.model]:  # Preserve the model selector combobox
+                widget.place_forget()
+
+        # Remove canvas text and image elements (language, text areas, etc.)
+        self.canvas.delete("all")
+        # Recreate the static parts of the canvas
+        self.create_canvas()
+        self.create_base_widgets(selectedModel)
         
     def relative_to_assets(self, path: str) -> Path:
         return ASSETS_PATH / Path(path)
