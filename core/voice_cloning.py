@@ -1,12 +1,12 @@
 import torch
 from TTS.api import TTS
 
-class VoiceSpeaking:
+class VoiceCloning:
     source_path = ""
     target_path = ""
     result_path = ""
 
-    def __init__(self, text, source_path, target_path, result_path) : 
+    def __init__(self, source_path, target_path, result_path) : 
         self.source_path = source_path
         self.target_path = target_path
         self.result_path = result_path
@@ -17,4 +17,4 @@ class VoiceSpeaking:
     def generateVoice(self) : 
         device = self.getDevice()
         tts = TTS(model_name="voice_conversion_models/multilingual/vctk/freevc24", progress_bar=True).to(device)
-        tts.voice_conversion_to_file(source_wav=self.source_path, target_wav=self.target_path, file_path=self.result_path)
+        tts.voice_conversion_to_file(source_wav=self.target_path, target_wav=self.source_path, file_path=self.result_path)

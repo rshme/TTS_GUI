@@ -1,11 +1,13 @@
 from pathlib import Path
+from core.voice_speaking import VoiceSpeaking
+from core.voice_cloning import VoiceCloning
 
 # from tkinter import *
 # Explicit imports to satisfy Flake8
 from tkinter import Tk, Canvas, ttk, filedialog, Entry, Text, Button, PhotoImage, StringVar
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"/Users/rafiseptianhadi/CLIApps/tts_gui_ui/assets/frame0")
+ASSETS_PATH = OUTPUT_PATH / Path(r"D:/apps/cli-apps/coqui/assets/frame0")
 
 class CoquiUI:
     def __init__(self, window):
@@ -208,7 +210,7 @@ class CoquiUI:
             image=self.btnImgBg,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("Button generate clicked"),
+            command=lambda: self.generate_voice(),
             relief="flat"
         )
         btnGenerate.place(
@@ -219,11 +221,19 @@ class CoquiUI:
         )
 
     def generate_voice(self):
-        print(self.output_path.get())
+        selectedModel = self.model.get()
+
+        if selectedModel == "Voice Speaking":
+            voiceSpeking = VoiceSpeaking(text=self.text_to_speech.get("1.0",'end-1c'), language=self.select_lang.get(), source_path=self.sourcePath.get(), result_path=self.outputPath.get())
+
+            voiceSpeking.generateVoice()
+        elif selectedModel == "Voice Cloning":
+            voiceCloning = VoiceCloning(source_path=self.sourcePath.get(), target_path=self.targetPath.get(), result_path=self.outputPath.get())
+
+            voiceCloning.generateVoice()
         
     def clear_dynamic_widgets(self):
         selectedModel = self.model.get()
-        print(selectedModel)
         
         """ Clear widgets related to the model-specific section (vs_widgets and vc_widgets) """
         # Destroy all dynamically created widgets to prepare for new ones
