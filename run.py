@@ -4,34 +4,43 @@ from core.ui import CoquiUI
 
 # Text to speech to a file
 text = """
-That's great dedication! Here are a few suggestions to help you learn English like a native speaker:
+The Echo of Time
 
-1. Practice Speaking Daily: Try to have conversations in English as much as possible. If you don't have someone to practice with, you can record yourself or use language exchange apps.
+Time drifts, like rivers sweeping past,
+a silent surge, swift yet so vast.
+In moments, we clutch for sands that fall,
+and memories, like shadows, call.
 
-2. Immerse Yourself in English: Watch movies, TV shows, and YouTube videos in English. Pay attention to how native speakers pronounce words and phrases. Try to mimic their pronunciation and intonation.
+Yesterday's laughter, bright and bold,
+now softened, tinged in shades of old.
+The echoes fade but never die,
+they linger, wrapped in a quiet sigh.
 
-3. Read Regularly: Read books, articles, or blogs in English. This will help you expand your vocabulary and understand sentence structure. Start with topics that interest you to keep it enjoyable.
+Faces and places blur and blend,
+forgotten smiles, the curve of a friend—
+in corners of mind, they patiently wait,
+frozen in snapshots, dusted by fate.
 
-4. Listen to Podcasts or Audiobooks: Listening to native speakers will help you get used to the rhythm and flow of the language. Choose topics that interest you to keep it engaging.
+For time slips slyly from our grip,
+a lover we can't hold or sip.
+It trickles, it tumbles, unbidden, unseen,
+yet in memory’s flicker, it’s sharp and keen.
 
-5. Practice Writing: Write a journal or short stories in English. This will help you improve your grammar and sentence structure. You can also ask someone to review your writing for feedback.
+So I carry it all, my years, my scars,
+in a pocket stitched with gentle stars,
+a tapestry woven of joy and ache,
+all the things that time can’t take.
 
-6. Join Online Communities: Participate in English-speaking forums or social media groups. Engaging in discussions with native speakers will help you practice real-life communication.
-
-7. Use Language Learning Apps: Apps like Duolingo, Babbel, or Anki can be great for vocabulary building and grammar practice.
-
-8. Stay Consistent: Consistency is key. Even on days when you're busy or tired, try to do at least a little practice.
-
-Would you like to focus on any specific area today, like speaking, listening, or writing?
+And when I turn to face the past,
+the shadows smile, they hold fast.
+Time may flow, may carry, may bind—
+but memories, dear, live outside of mind.
 """
-
-# voiceSpeaking = VoiceSpeaking(text=text, language="en", source_path="./sources/changli-voice.wav", result_path="./outputs/changli-result-class.wav")
-# voiceSpeaking.generateVoice()
 
 # Text to speech to a file
 # Init TTS Conversation
-# tts = TTS(model_name="voice_conversion_models/multilingual/vctk/freevc24", progress_bar=True).to(device)
-# tts.voice_conversion_to_file(source_wav="./targets/bebi-short-wav.wav", target_wav="./sources/ayaka-voice-wav.wav", file_path="./outputs/ayaka-sx-wav.wav")
+# tts = TTS("tts_models/eng/fairseq/vits").to("cuda")
+# tts.tts_with_vc_to_file(text, speaker_wav="./sources/source-voice.wav", file_path="./outputs/target.wav")
 
 if __name__ == "__main__":
     window = tk.Tk()
